@@ -10,6 +10,7 @@ namespace war_game_server.Models
         [Range(2, 14)]
         public int Value { get; set; }
         public int? Position { get; set; } = null;
+        public string PhotoPath { get; set; }
         public int PlayerId { get; set; }
 
         [JsonIgnore]

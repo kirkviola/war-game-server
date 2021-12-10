@@ -20,7 +20,9 @@ namespace war_game_server.Models
 
                 c.HasKey(c => c.Id);
                 c.Property(x => x.Name).HasMaxLength(128).IsRequired();
+                c.HasIndex(x => x.Name).IsUnique();
                 c.Property(x => x.Value).IsRequired();
+                c.Property(x => x.PhotoPath).HasMaxLength(128).IsRequired();
                 c.HasOne(x => x.Player)
                     .WithMany(x => x.Cards)
                     .HasForeignKey(x => x.PlayerId)
