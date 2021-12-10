@@ -36,6 +36,7 @@ namespace war_game_server.Models
 
                 p.HasKey(x => x.Id);
                 p.Property(x => x.Name).HasMaxLength(128).IsRequired();
+                p.HasIndex(x => x.Name).IsUnique();
 
             });
         }
