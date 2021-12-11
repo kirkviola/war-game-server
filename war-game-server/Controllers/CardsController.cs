@@ -41,6 +41,7 @@ namespace war_game_server.Controllers
             return card;
         }
 
+
         // PUT: api/Cards/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -70,6 +71,53 @@ namespace war_game_server.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpPut("shuffle/{id}")]
+        public async Task<IActionResult> ShuffleDeck(int id)
+        {
+            var deck = await _context.Cards.ToListAsync();
+
+            var rand = new Random();
+            var sequence = new List<int>();
+            var num = 0;
+
+            while (sequence.Count < deck.Count)
+            {
+
+                do
+                {
+                    num = rand.Next(1, deck.Count + 1);
+
+                } while (sequence.Contains(num));
+                {
+                    sequence.Add(num);
+                }
+
+            }
+            for (var i = 0; i < deck.Count; i++)
+            {
+                    deck[i].Position = sequence[i];
+            }
+
+            // Deal the cards
+            var comp = await _context.Players.SingleOrDefaultAsync(x => x.Name == "Computer");
+
+            for (var i = 0; i < deck.Count; i++)
+            {
+                deck[i].PlayerId = (i + 1) % 2 == 0
+                                    ? id : comp.Id;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPut("play")]
+        public async Task<IActionResult> PlayHand(Card playerCard, Card compCard)
+        {
+
         }
 
         // POST: api/Cards

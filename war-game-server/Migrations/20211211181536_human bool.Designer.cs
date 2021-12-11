@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using war_game_server.Models;
 
@@ -11,9 +12,10 @@ using war_game_server.Models;
 namespace war_game_server.Migrations
 {
     [DbContext(typeof(WarDbContext))]
-    partial class WarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211211181536_human bool")]
+    partial class humanbool
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
