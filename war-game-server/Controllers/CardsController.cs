@@ -102,11 +102,14 @@ namespace war_game_server.Controllers
 
             // Deal the cards
             var comp = await _context.Players.SingleOrDefaultAsync(x => x.Name == "Computer");
+            var playerIdx = 0;
+            var compIdx = 0;
 
-            for (var i = 0; i < deck.Count; i++)
+            // deck.Sort();
+            // Will need to decrease i for indexing due to divide by zero error avoidance
+            for (var i = 1; i <= deck.Count; i++)
             {
-                deck[i].PlayerId = (i + 1) % 2 == 0
-                                    ? id : comp.Id;
+               
             }
 
             await _context.SaveChangesAsync();
@@ -114,10 +117,19 @@ namespace war_game_server.Controllers
             return Ok();
         }
 
-        [HttpPut("play")]
-        public async Task<IActionResult> PlayHand(Card playerCard, Card compCard)
+        [HttpPut("play/{id}")]
+        public async Task<IActionResult> PlayHand(int id)
         {
+            var playerCard = await _context.Cards.SingleOrDefaultAsync(x => x.Position == 1);
+            var compCard = await _context.Cards.SingleOrDefaultAsync(x => x.Position == 1);
+            var player = await _context.Players.SingleOrDefaultAsync(x => x.Id == id);
+            var comp = await _context.Players.SingleOrDefaultAsync(x => x.Name == "Computer");
 
+
+            if (playerCard.Value > compCard.Value)
+            {
+
+            }
         }
 
         // POST: api/Cards
